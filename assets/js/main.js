@@ -1,21 +1,41 @@
-const limit = 0;
-const offset = 10;
-const url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`;
 // Request Method - Metodo Http
 // Post, get, put, delete e update.
 //Query String - Parte da url que e usado para enviar dados adicionais, paramentros de dados que queremos
 
-fetch(url)
-  .then((res) => {
-    return res.json();
-  })
-  .then((jsonBody) => {
-    console.log(jsonBody);
-  })
+function convertPokemonToHtml(pokemon) {
+  return `
+  <li class="pokemon">
+  <span class="number">#001</span>
+  <span class="name">${pokemon.name}</span>
 
+  <div class="detail">
+      <ol class="types">
+          <li class="type">
+              grass
+          </li>
+          <li class="type">
+              poison
+          </li>
+      </ol>
+      <img src="./assets/bulbasaur-seeklogo.com.svg" alt="${pokemon.name}">
+  </div>
+
+</li>
+  
+  `;
+}
+const pokemonList = document.getElementById("pokemonList");
+
+pokeApi.getPokemons()
+  .then((pokemons) => {
+    const listItems = [];
+
+    for (let i = 0; i < pokemons.length; i++) {
+      const pokemon = pokemons[i];
+      listItems.push(convertPokemonToHtml(pokemon))
+    }
+
+  })
   .catch((error) => {
     console.log(error);
-  })
-  .finally(() => {
-    console.log(`Requisicao concluida`);
   });
